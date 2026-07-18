@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaurav Tech Studios | Multi-Vector Cryptographic Hub</title>
+    <style>
+        :root {
+            --bg-main: #02040a;
+            --panel-bg: rgba(6, 11, 25, 0.92);
+            --neon-cyan: #00f0ff;
+            --neon-purple: #bd57ff;
+            --neon-green: #39ff14;
+            --neon-matrix: #00ff66;
+            --neon-alert: #ff2a5f;
+            --text-pure: #ffffff;
+            --text-muted: #94a3b8;
+            --border-glow: rgba(0, 240, 255, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-pure);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 30px 20px;
+            animation: chromaSpectrumShift 30s infinite alternate;
+        }
+
+        /* 100-Color Engine Spectrum Animation Background Layer */
+        @keyframes chromaSpectrumShift {
+            0% { background-color: #02040a; }
+            25% { background-color: #040817; }
+            50% { background-color: #0c0417; }
+            75% { background-color: #041417; }
+            100% { background-color: #090e0b; }
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.02) 1px, transparent 1px);
+            background-size: 45px 45px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .top-global-header {
+            width: 100%;
+            max-width: 1400px;
+            background: rgba(4, 8, 18, 0.9);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            z-index: 3;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+
+        .header-left-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: 1.5px;
+            color: var(--text-pure);
+        }
+
+        .brand-node-indicator {
+            width: 10px;
+            height: 10px;
+            background: var(--neon-cyan);
+            box-shadow: 0 0 10px var(--neon-cyan);
+            border-radius: 50%;
+        }
+
+        .header-center-nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link-node {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+
+        .nav-link-node.active, .nav-link-node:hover {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 8px rgba(0, 240, 255, 0.6);
+        }
+
+        .header-right-metrics {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--neon-matrix);
+            background: rgba(0, 255, 102, 0.08);
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid rgba(0, 255, 102, 0.2);
+            letter-spacing: 0.5px;
+        }
+
+        .cyber-vector-canvas {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .workspace-wrapper {
+            display: grid;
+            grid-template-columns: 310px 1fr 310px;
+            gap: 30px;
+            width: 100%;
+            max-width: 1400px;
+            margin: auto;
+            z-index: 2;
+        }
+
+        .cyber-flank-panel {
+            background: rgba(4, 8, 18, 0.85);
+            border: 1px dashed var(--border-glow);
+            border-radius: 16px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            height: fit-content;
+        }
+
+        .flank-header {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--neon-purple);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 1px solid rgba(189, 87, 255, 0.2);
+            padding-bottom: 10px;
+        }
+
+        .telemetry-item {
+            font-size: 14px;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        .telemetry-label {
+            color: var(--neon-cyan);
+            display: block;
+            margin-bottom: 4px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .quantum-mainframe {
+            background: var(--panel-bg);
+            border-radius: 24px;
+            padding: 45px;
+            box-shadow: 0 0 60px rgba(0, 240, 255, 0.15);
+            border: 1px solid var(--border-glow);
+            backdrop-filter: blur(20px);
+            position: relative;
+        }
+
+        .quantum-mainframe::before, .quantum-mainframe::after {
+            content: '';
+            position: absolute;
+            width: 25px; height: 25px;
+            border: 2px solid var(--neon-cyan);
+        }
+        .quantum-mainframe::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+        .quantum-mainframe::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+
+        .brand-telemetry {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .brand-telemetry h1 {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #fff, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-telemetry .sys-status {
+            font-size: 13px;
+            color: var(--neon-matrix);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--neon-matrix);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            70% { transform: scale(1.3); opacity: 1; }
+            100% { transform: scale(0.8); opacity: 0.5; }
+        }
+
+        .pipeline-progress {
+            font-size: 14px;
+            color: var(--neon-purple);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            text-align: right;
+            font-weight: 700;
+        }
+
+        .step-panel { display: none; }
+        .step-panel.active { display: block; animation: cyberEntrance 0.4s ease-out forwards; }
+
+        @keyframes cyberEntrance {
+            from { opacity: 0; transform: scale(0.99) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .holo-card {
+            background: rgba(0, 240, 255, 0.04);
+            border-left: 4px solid var(--neon-cyan);
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            font-size: 15px;
+            line-height: 1.6;
+            color: #e2e8f0;
+        }
+
+        .form-row { display: flex; gap: 20px; }
+        .form-group { margin-bottom: 25px; width: 100%; position: relative; }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--neon-cyan);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 15px 18px;
+            background: rgba(2, 4, 10, 0.85);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 6px;
+            color: var(--text-pure);
+            font-size: 16px;
+            transition: all 0.25s;
+        }
+
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 14px rgba(189, 87, 255, 0.3);
+        }
+
+        /* Integrity Truth Indicator Badge UI */
+        .slot-integrity-badge {
+            position: absolute;
+            right: 15px;
+            bottom: 15px;
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            pointer-events: none;
+            display: none;
+        }
+        .integrity-true { display: block; color: var(--neon-matrix); background: rgba(0,255,102,0.1); }
+        .integrity-false { display: block; color: var(--neon-alert); background: rgba(255,42,95,0.1); }
+
+        .upsell-box {
+            display: flex;
+            align-items: flex-start;
+            background: rgba(189, 87, 255, 0.03);
+            border: 1px solid rgba(189, 87, 255, 0.25);
+            padding: 22px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 25px;
+        }
+
+        .upsell-box:hover {
+            border-color: var(--neon-purple);
+            background: rgba(189, 87, 255, 0.07);
+        }
+
+        .upsell-box input[type="checkbox"] {
+            margin-right: 18px;
+            margin-top: 4px;
+            width: 22px;
+            height: 22px;
+            accent-color: var(--neon-purple);
+        }
+
+        .upsell-title { font-size: 16px; font-weight: 700; color: var(--text-pure); display: block; margin-bottom: 6px; }
+        .upsell-desc { font-size: 14px; color: var(--text-muted); line-height: 1.5; display: block; margin-bottom: 8px; }
+        .upsell-cost { color: var(--neon-cyan); font-weight: 700; font-size: 15px; }
+
+        .cyber-btn {
+            width: 100%;
+            padding: 18px;
+            background: transparent;
+            color: var(--neon-cyan);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+        }
+
+        .cyber-btn:hover {
+            background: var(--neon-cyan);
+            color: var(--bg-main);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+        }
+
+        .qr-terminal-frame {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            display: block;
+            margin: 25px auto;
+            width: 210px; height: 210px;
+            border: 3px solid var(--neon-cyan);
+        }
+        .qr-terminal-frame img { width: 100%; height: 100%; }
+
+        .telemetry-node-display {
+            background: rgba(0, 240, 255, 0.03);
+            border: 1px dashed rgba(0, 240, 255, 0.3);
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 25px;
+            font-size: 15px;
+            line-height: 1.7;
+            color: #cbd5e1;
+        }
+
+        .live-balance-banner {
+            background: rgba(0,240,255,0.06);
+            padding: 16px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 16px;
+            color: var(--neon-cyan);
+            font-weight: 700;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0,240,255,0.25);
+            letter-spacing: 0.5px;
+        }
+
+        .system-routing-verify-node {
+            opacity: 0 !important;
+            position: absolute !important;
+            z-index: -9999 !important;
+            pointer-events: none !important;
+        }
+
+        @media(max-width: 1150px) {
+            .workspace-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .cyber-flank-panel, .cyber-vector-canvas { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<svg class="cyber-vector-canvas" xmlns="http://www.w3.org/2000/svg">
+    <line x1="50" y1="120" x2="280" y2="350" stroke="rgba(0, 240, 255, 0.08)" stroke-width="1.5" stroke-dasharray="6 6" />
+    <line x1="1200" y1="180" x2="1380" y2="450" stroke="rgba(189, 87, 255, 0.08)" stroke-width="1.5" />
+    <polygon points="60,160 110,230 40,250" fill="none" stroke="rgba(0, 240, 255, 0.18)" stroke-width="1.5" />
+    <circle cx="240" cy="200" r="30" fill="none" stroke="rgba(189, 87, 255, 0.15)" stroke-width="1.5" />
+    <polygon points="1320,280 1370,350 1300,370" fill="none" stroke="rgba(189, 87, 255, 0.18)" stroke-width="1.5" />
+</svg>
+
+<div class="top-global-header">
+    <div class="header-left-brand">
+        <div class="brand-node-indicator"></div>
+        <span>GAURAV TECH STUDIOS</span>
+    </div>
+    <div class="header-center-nav">
+        <div class="nav-link-node active">Mainframe</div>
+        <div class="nav-link-node">Core Modules</div>
+        <div class="nav-link-node">Live Telemetry</div>
+        <div class="nav-link-node">Threat Wall</div>
+    </div>
+    <div class="header-right-metrics">
+        🛡️ FIRE-BOLTT™ ACTIVE PROTECTION
+    </div>
+</div>
+
+<div class="workspace-wrapper">
+    
+    <div class="cyber-flank-panel">
+        <div class="flank-header">⚡ Web Infrastructure Data</div>
+        <div class="telemetry-item">
+            <span class="telemetry-label">Session Initialization Array</span>
+            <span id="sessionDisplay" style="color: var(--neon-matrix); font-weight: 600;">GTS-88492-X</span>
+        </div>
+        <div class="telemetry-item">
+            <span class="telemetry-label">Active Connection Latency</span>
+            <span style="color: var(--neon-matrix); font-weight: 600;">14ms (Optimal Pipeline)</span>
+        </div>
+        <div class="telemetry-item">
+            <span class="telemetry-label">Integrity State Engine</span>
+            <span id="integrityStateLogs" style="color: var(--neon-cyan); font-weight: 600;">SCANNING REALTIME...</span>
+        </div>
+    </div>
+
+    <div class="quantum-mainframe">
+        <div class="brand-telemetry">
+            <h1>Gaurav Tech Studios</h1>
+            <div class="sys-status">
+                <div class="pulse-dot"></div> Mainframe Node Matrix v13.0
+            </div>
+        </div>
+
+        <div class="pipeline-progress" id="pipelineIndex">Pipeline Status: 01 / 13</div>
+
+        <div class="system-routing-verify-node">
+            <input type="text" id="sysVerifyToken" autocomplete="off" tabindex="-1">
+        </div>
+
+        <!-- STEP 1: Core Demographics -->
+        <div id="step1" class="step-panel active">
+            <div class="holo-card">Initialize configuration sequence. Deployment baseline parameters fixed at: <span style="color:var(--neon-cyan); font-weight:bold;">₹399</span>.</div>
+            <form onsubmit="navigatePanel(event, 1, 2)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Identity: First Name</label>
+                        <input type="text" id="fName" placeholder="Enter root string" required autocomplete="off" oninput="validateSlotTruth(this, 'name')">
+                        <span class="slot-integrity-badge" id="fName-badge"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Identity: Last Name</label>
+                        <input type="text" id="lName" placeholder="Enter secondary string" required autocomplete="off" oninput="validateSlotTruth(this, 'name')">
+                        <span class="slot-integrity-badge" id="lName-badge"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Operational Age Vector</label>
+                    <input type="number" id="ageInput" min="16" max="90" placeholder="Minimum threshold: 16" required oninput="validateSlotTruth(this, 'age')">
+                    <span class="slot-integrity-badge" id="ageInput-badge"></span>
+                </div>
+                <button type="submit" class="cyber-btn">Compile Step 01</button>
+            </form>
+        </div>
+
+        <!-- STEP 2: Geographic Routing -->
+        <div id="step2" class="step-panel">
+            <form onsubmit="navigatePanel(event, 2, 3)">
+                <div class="form-group">
+                    <label>Physical Node / Delivery Address</label>
+                    <input type="text" id="addressInput" placeholder="Specify global terminal location" required autocomplete="off" oninput="validateSlotTruth(this, 'length')">
+                    <span class="slot-integrity-badge" id="addressInput-badge"></span>
+                </div>
+                <div class="form-group">
+                    <label>Regional Sector Jurisdiction</label>
+                    <select id="stateSelect" required>
+                        <option value="Delhi">Delhi Sector NCR</option>
+                        <option value="Maharashtra">Maharashtra Sector</option>
+                        <option value="Karnataka">Karnataka Sector</option>
+                        <option value="Uttar Pradesh">Uttar Pradesh Sector</option>
+                        <option value="Gujarat">Gujarat Sector</option>
+                        <option value="West Bengal">West Bengal Sector</option>
+                        <option value="Other">External Variant Vector</option>
+                    </select>
+                </div>
+                <button type="submit" class="cyber-btn">Compile Step 02</button>
+            </form>
+        </div>
+
+        <!-- STEP 3: Corporate Identity Context -->
+        <div id="step3" class="step-panel">
+            <form onsubmit="navigatePanel(event, 3, 4)">
+                <div class="form-group">
+                    <label>Active WhatsApp Telemetry Node</label>
+                    <input type="tel" id="clientWhatsApp" placeholder="10-digit digital string" required autocomplete="off" oninput="validateSlotTruth(this, 'phone')">
+                    <span class="slot-integrity-badge" id="clientWhatsApp-badge"></span>
+                </div>
+                <div class="form-group">
+                    <label>Corporate / Brand Identity Title</label>
+                    <input type="text" id="corporateName" placeholder="Enterprise register name" required autocomplete="off" oninput="validateSlotTruth(this, 'length')">
+                    <span class="slot-integrity-badge" id="corporateName-badge"></span>
+                </div>
+                <button type="submit" class="cyber-btn">Compile Step 03</button>
+            </form>
+        </div>
+
+        <!-- STEP 4: System Specifications -->
+        <div id="step4" class="step-panel">
+            <form onsubmit="navigatePanel(event, 4, 5)">
+                <div class="form-group">
+                    <label>System Logic Requirements Details (100+ Enterprise Features Loaded)</label>
+                    <textarea id="projectScope" rows="4" placeholder="Outline primary architecture targets..." required oninput="validateSlotTruth(this, 'length')"></textarea>
+                    <span class="slot-integrity-badge" id="projectScope-badge"></span>
+                </div>
+                <button type="submit" class="cyber-btn">Compile Step 04</button>
+            </form>
+        </div>
+
+        <!-- STEP 5: Advanced Feature Set -->
+        <div id="step5" class="step-panel">
+            <form onsubmit="navigatePanel(event, 5, 6)">
+                <div class="form-group">
+                    <label>Advanced Auxiliary Extensions Request</label>
+                    <textarea id="featureSet" rows="4" placeholder="E.g., Payment array integrations, inventory tracking panels..." required oninput="validateSlotTruth(this, 'length')"></textarea>
+                    <span class="slot-integrity-badge" id="featureSet-badge"></span>
+                </div>
+                <button type="submit" class="cyber-btn">Compile Step 05</button>
+            </form>
+        </div>
+
+        <!-- STEP 6: Marine Registry Initialization -->
+        <div id="step6" class="step-panel">
+            <div class="holo-card">// MARINE INTEGRATION PROTOCOL INITIALIZED. Link vessel diagnostics data arrays.</div>
+            <form onsubmit="navigatePanel(event, 6, 7)">
+                <div class="form-group">
+                    <label>Vessel Call Sign / Marine ID</label>
+                    <input type="text" id="vesselId" placeholder="e.g., NAV-9941-Alpha" required autocomplete="off" oninput="validateSlotTruth(this, 'length')">
+                    <span class="slot-integrity-badge" id="vesselId-badge"></span>
+                </div>
+                <button type="submit" class="cyber-btn">Compile Step 06</button>
+            </form>
+        </div>
+
+        <!-- STEP 7: Marine Classification -->
+        <div id="step7" class="step-panel">
+            <form onsubmit="navigatePanel(event, 7, 8)">
+                <div class="form-group">
+                    <label>Vessel Class Classification</label>
+                    <select id="vesselType" required>
+                        <option value="Commercial Transport">Commercial Transport Hull</option>
+                        <option value="Recreational Cruiser">Recreational Cruiser Hull</option>
+                        <option value="Offshore Utility">Offshore Utility Array</option>
+                        <option value="Deep-Sea Explorer">Deep-Sea Explorer Matrix</option>
+                    </select>
+                </div>
+                <button type="submit" class="cyber-btn">Compile Step 07</button>
+            </form>
+        </div>
+
+        <!-- STEP 8: Operational Conditions -->
+        <div id="step8" class="step-panel">
+            <form onsubmit="navigatePanel(event, 8, 9)">
+                <div class="form-group">
+                    <label>Primary Environmental Sync Deployment</label>
+                    <select id="envSync" required>
+                        <option value="Coastal Saltwater Matrix">Coastal Saltwater Matrix</option>
+                        <option value="Inland Freshwater Array">Inland Freshwater Array</option>
+                        <option value="High-Pressure Deep Ocean Zone">High-Pressure Deep Ocean Zone</option>
+                    </select>
+                </div>
+                <button type="submit" class="cyber-btn">Compile Step 08</button>
+            </form>
+        </div>
+
+        <!-- STEP 9: Vessel Diagnostics Log -->
+        <div id="step9" class="step-panel">
+            <div class="telemetry-node-display">
+                ⚡ [AUTOMATED SCAN LOG COMPLETION]:<br><br>
+                • Hull Integrity: 99.1% Nominal Calibration<br>
+                • Propulsion Status: Core Grid Stable // Operational<br>
+                • Transponder Array: Synchronized to Satellite Tracking Hub
+            </div>
+            <button type="button" class="cyber-btn" onclick="goToStep(9, 10)">Accept Diagnostics & Advance</button>
+        </div>
+
+        <!-- STEP 10: Protection Upsell Module 1 -->
+        <div id="step10" class="step-panel">
+            <label class="upsell-box">
+                <input type="checkbox" id="optSecurity" value="150" onchange="calculateDynamicTotal()">
+                <span style="display:block;">
+                    <span class="upsell-title">🛡️ Quantum Firewall Protection Vector</span>
+                    <span class="upsell-desc">Mitigates server layer security threats, intercepts forms script insertion exploits.</span>
+                    <span class="upsell-cost">+₹150 One-Time Allocation</span>
+                </span>
+            </label>
+            <div class="live-balance-banner">Dynamic Running Total: <span class="step10-total">₹399</span></div>
+            <button type="button" class="cyber-btn" onclick="goToStep(10, 11)">Confirm Protection & Advance</button>
+        </div>
+
+        <!-- STEP 11: Protection Upsell Module 2 -->
+        <div id="step11" class="step-panel">
+            <label class="upsell-box">
+                <input type="checkbox" id="optBackup" value="99" onchange="calculateDynamicTotal()">
+                <span style="display:block;">
+                    <span class="upsell-title">🔄 Real-time Cloud Failover Backups</span>
+                    <span class="upsell-desc">Automatically secures baseline server data arrays daily to remote cloud banks.</span>
+                    <span class="upsell-cost">+₹99 One-Time Allocation</span>
+                </span>
+            </label>
+            <div class="live-balance-banner">Dynamic Running Total: <span class="step11-total">₹399</span></div>
+            <button type="button" class="cyber-btn" onclick="goToStep(11, 12)">Confirm Backups & Advance</button>
+        </div>
+
+        <!-- STEP 12: Subscription Upsell Module 3 -->
+        <div id="step12" class="step-panel">
+            <label class="upsell-box">
+                <input type="checkbox" id="optSub" value="299" onchange="calculateDynamicTotal()">
+                <span style="display:block;">
+                    <span class="upsell-title">⚡ VIP Hyper-Care Subscription Matrix</span>
+                    <span class="upsell-desc">Unlocks recurring monthly engineering content adjustments and framework tuning operations.</span>
+                    <span class="upsell-cost">+₹299 / Month Ongoing Premium</span>
+                </span>
+            </label>
+            <div class="live-balance-banner">Final Compiled Balance: <span class="step12-total">₹399</span></div>
+            <button type="button" class="cyber-btn" onclick="processToPaymentLedger()">Generate Step 13 Ledger</button>
+        </div>
+
+        <!-- STEP 13: Cryptographic Ledger -->
+        <div id="step13" class="step-panel">
+            <div style="background: rgba(0, 255, 102, 0.08); border: 1px dashed var(--neon-matrix); padding: 14px; border-radius: 6px; text-align: center; font-size: 14px; font-weight: bold; color: var(--neon-matrix); margin-bottom: 20px;">
+                🔒 UPI INTERFACE TRANSACTION CORE PIPELINE SECURED
+            </div>
+            <p style="text-align: center; font-size: 16px; margin-bottom: 20px;">Final Cost Matrix: <span id="paymentTotalText" style="color:var(--neon-cyan); font-weight:bold;">₹399 INR</span></p>
+            
+            <div class="qr-terminal-frame">
+                <img id="qrElement" src="" alt="Secure Payment QR Target">
+            </div>
+
+            <div style="text-align: center; margin-bottom: 25px;">
+                <a id="directUpiLink" href="#" style="text-decoration: none;">
+                    <button type="button" class="cyber-btn" style="font-size: 13px;">⚡ Open Smart Mobile UPI App</button>
+                </a>
+            </div>
+
+            <button type="button" class="cyber-btn" style="color: var(--neon-green); border-color: var(--neon-green);" onclick="executeSystemCompilation()">Authorize Order Compilation</button>
+        </div>
+    </div>
+
+    <div class="cyber-flank-panel">
+        <div class="flank-header">📊 Server Operations Log</div>
+        <div class="telemetry-item">
+            <span class="telemetry-label">Mainframe Chrono Clock</span>
+            <span id="liveClockDisplay" style="color: var(--neon-cyan); font-weight: 600;">00:00:00 UTC</span>
+        </div>
+        <div class="telemetry-item">
+            <span class="telemetry-label">Total Pipeline Steps</span>
+            <span style="color: #cbd5e1;">13 Production Nodes</span>
+        </div>
+        <div class="telemetry-item">
+            <span class="telemetry-label">Platform Core Version</span>
+            <span style="color: var(--neon-purple); font-weight: 600;">v13.0.4 Enterprise</span>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const _ENC_UPI = "NjI5MTI1MDk4MEBwdHNiaQ==";
+    const _ENC_PHN = "OTE2Mjg5MTQ1NjIy";
+
+    const SYSTEM_UPI_ID = atob(_ENC_UPI);
+    const BUSINESS_PHONE = atob(_ENC_PHN);
+    
+    let baseAmount = 399;
+    let computedTotal = 399;
+
+    document.addEventListener("DOMContentLoaded", () => {
+        refreshPaymentGateways(baseAmount);
+        updateProgressIndicator(1);
+        
+        document.getElementById('sessionDisplay').innerText = `GTS-${Math.floor(10000 + Math.random() * 90000)}-X`;
+        
+        setInterval(() => {
+            const time = new Date();
+            document.getElementById('liveClockDisplay').innerText = time.toUTCString().replace("GMT", "UTC");
+        }, 1000);
+    });
+
+    // Fire-Boltt Structural Truth Verification Engine
+    function validateSlotTruth(element, type) {
+        const value = element.value.trim();
+        const badge = document.getElementById(`${element.id}-badge`);
+        if (!badge) return;
+
+        let isTrue = false;
+
+        if (type === 'name') {
+            isTrue = value.length >= 2 && /^[A-Za-z\s]+$/.test(value);
+        } else if (type === 'age') {
+            const age = parseInt(value);
+            isTrue = age >= 16 && age <= 90;
+        } else if (type === 'phone') {
+            isTrue = /^[6-9]\d{9}$/.test(value);
+        } else if (type === 'length') {
+            isTrue = value.length >= 4;
+        }
+
+        if (value === "") {
+            badge.style.display = "none";
+        } else if (isTrue) {
+            badge.className = "slot-integrity-badge integrity-true";
+            badge.innerText = "✓ Valid Node Data";
+            document.getElementById('integrityStateLogs').innerText = "TRUTH MATRIX MATCHED";
+            document.getElementById('integrityStateLogs').style.color = "var(--neon-matrix)";
+        } else {
+            badge.className = "slot-integrity-badge integrity-false";
+            badge.innerText = "✗ Anomaly Detected";
+            document.getElementById('integrityStateLogs').innerText = "FLAGGED ANOMALY NODE";
+            document.getElementById('integrityStateLogs').style.color = "var(--neon-alert)";
+        }
+    }
+
+    function updateProgressIndicator(step) {
+        document.getElementById('pipelineIndex').innerText = `Pipeline Status: ${step.toString().padStart(2, '0')} / 13`;
+    }
+
+    function calculateDynamicTotal() {
+        computedTotal = baseAmount;
+        if (document.getElementById('optSecurity').checked) computedTotal += parseInt(document.getElementById('optSecurity').value);
+        if (document.getElementById('optBackup').checked) computedTotal += parseInt(document.getElementById('optBackup').value);
+        if (document.getElementById('optSub').checked) computedTotal += parseInt(document.getElementById('optSub').value);
+        
+        document.querySelectorAll('.step10-total, .step11-total, .step12-total').forEach(el => {
+            el.innerText = `₹${computedTotal}`;
+        });
+    }
+
+    function processToPaymentLedger() {
+        document.getElementById('paymentTotalText').innerText = `₹${computedTotal} INR`;
+        refreshPaymentGateways(computedTotal);
+        goToStep(12, 13);
+    }
+
+    function refreshPaymentGateways(amount) {
+        const upiPaymentUri = `upi://pay?pa=${encodeURIComponent(SYSTEM_UPI_ID)}&pn=Gaurav%20Tech%20Studios&am=${amount}&cu=INR`;
+        document.getElementById('qrElement').src = `https://api.qrserver.com/v1/create-qr-code/?size=190x190&data=${encodeURIComponent(upiPaymentUri)}`;
+        document.getElementById('directUpiLink').href = upiPaymentUri;
+    }
+
+    function transitionView(current, next) {
+        document.getElementById(`step${current}`).classList.remove('active');
+        document.getElementById(`step${next}`).classList.add('active');
+        updateProgressIndicator(next);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function navigatePanel(e, current, next) {
+        e.preventDefault();
+        transitionView(current, next);
+    }
+
+    function goToStep(current, next) {
+        transitionView(current, next);
+    }
+
+    function executeSystemCompilation() {
+        const botTokenDetector = document.getElementById('sysVerifyToken').value;
+        if (botTokenDetector !== "") {
+            console.warn("Security Alert: Honeypot Intercepted.");
+            return;
+        }
+
+        const securityStatus = document.getElementById('optSecurity').checked ? "Enabled (+₹150)" : "Disabled";
+        const backupStatus = document.getElementById('optBackup').checked ? "Enabled (+₹99)" : "Disabled";
+        const subscriptionStatus = document.getElementById('optSub').checked ? "Active (+₹299/mo)" : "Inactive";
+
+        const packageData = {
+            fName: document.getElementById('fName').value,
+            lName: document.getElementById('lName').value,
+            age: document.getElementById('ageInput').value,
+            addr: document.getElementById('addressInput').value,
+            state: document.getElementById('stateSelect').value,
+            whatsapp: document.getElementById('clientWhatsApp').value,
+            corp: document.getElementById('corporateName').value,
+            scope: document.getElementById('projectScope').value,
+            features: document.getElementById('featureSet').value,
+            boatId: document.getElementById('vesselId').value,
+            boatType: document.getElementById('vesselType').value,
+            boatEnv: document.getElementById('envSync').value
+        };
+
+        const outMsg = `*13-STEP ENTERPRISE ARCHITECTURE DEPLOYMENT*%0A%0A` +
+                       `*IDENTITY NODES:*%0A• Name: ${packageData.fName} ${packageData.lName}%0A• Age: ${packageData.age}%0A• Routing Node: ${packageData.addr}, Sector: ${packageData.state}%0A• Link Contact: ${packageData.whatsapp}%0A%0A` +
+                       `*BUSINESS FRAMEWORK:*%0A• Corp Label: ${packageData.corp}%0A• Directives: ${packageData.scope}%0A• Extensions: ${packageData.features}%0A%0A` +
+                       `*MARINE DIAGNOSTIC METRICS:*%0A• Vessel ID: ${packageData.boatId}%0A• Class: ${packageData.boatType}%0A• Operational Environment: ${packageData.boatEnv}%0A%0A` +
+                       `*SECURITY & UPGRADES ARRAYS:*%0A• Firewall Protocol: ${securityStatus}%0A• Cloud Backup Node: ${backupStatus}%0A• VIP Matrix Plan: ${subscriptionStatus}%0A%0A` +
+                       `*FINANCIAL SETTLEMENT:*%0A• Compiled Ledger Token: ₹${computedTotal} (Verified Payment Initiated)`;
+
+        window.open(`https://wa.me/${BUSINESS_PHONE}?text=${outMsg}`, '_blank');
+    }
+
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('selectstart', e => e.preventDefault());
+    document.addEventListener('dragstart', e => e.preventDefault());
+</script>
+</body>
+</html>
